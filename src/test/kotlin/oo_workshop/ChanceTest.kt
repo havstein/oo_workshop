@@ -8,6 +8,14 @@ import org.junit.jupiter.params.provider.ValueSource
 
 internal class ChanceTest {
 
+    @ParameterizedTest
+    @ValueSource(doubles = [0.0, 0.5, 1.0])
+    internal fun `equals`(probability: Double) {
+        Chance(probability).also {
+            assertEquals(it, it)
+        }
+    }
+
     @Nested
     inner class Not {
         @Test
@@ -26,7 +34,7 @@ internal class ChanceTest {
         }
 
         @ParameterizedTest
-        @ValueSource(doubles = [0.0, 0.5, 1.0])
+        @ValueSource(doubles = [0.0, 0.25, 1.0])
         internal fun `dobbel-ikke`(probability: Double) {
             Chance(probability).also {
                 assertEquals(it, !!it)
