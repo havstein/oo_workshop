@@ -5,6 +5,10 @@ class Chance(private val probability: Double) {
         return Chance(1 - probability)
     }
 
+    override fun hashCode(): Int {
+        return probability.hashCode()
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is Chance) return false
         return this.probability == other.probability
