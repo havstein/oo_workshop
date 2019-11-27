@@ -1,16 +1,34 @@
 package oo_workshop
 
-abstract class Unit(private val tablespoons: Int) {
-    fun asGallon(): Gallon {
-        return Gallon.fromTableSpoons(tablespoons)
+class Unit {
+
+    private val name: String
+    private val baseUnitRatio: Double
+
+    private constructor(name: String) {
+        this.name = name
+        baseUnitRatio = 1.0
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (other !is Unit) return false
-        return this.tablespoons == other.tablespoons
+    private constructor(name: String, relativeRatio: Number, relativeUnit: Unit) {
+        this.name = name
+        baseUnitRatio = relativeRatio.toDouble() * relativeUnit.baseUnitRatio
     }
 
-    override fun hashCode() = this.tablespoons.hashCode()
+    companion object {
+        val Teaspoon = Unit("Teaspoon")
+        val Tablespoon = Unit("Tablespoon", 3, Teaspoon)
+        val Ounce = Unit("Ounce", 2, Tablespoon)
+        val Cups = Unit("Cups", 8, Ounce)
+        val Pint = Unit("Pint", 2, Cups)
+        val Quart = Unit("Quart", 2, Pint)
+        val Gallon = Unit("Gallon", 4, Quart)
+    }
 
-    override fun toString() = "T($tablespoons)"
+    override fun toString(): String {
+        return name
+    }
+
+    internal fun ratio(other: Unit) =
+            this.baseUnitRatio / other.baseUnitRatio
 }

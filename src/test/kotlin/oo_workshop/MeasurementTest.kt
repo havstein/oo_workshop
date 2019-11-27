@@ -8,19 +8,20 @@ internal class MeasurementTest {
 
     @Test
     internal fun equality() {
-        assertEquals(Gallon(1), Gallon(1))
-        assertEquals(Gallon(1), Gallon(1).asGallon())
-        assertNotEquals(Gallon(1), Gallon(2))
+        assertEquals(Measurement(1.0, Unit.Gallon), Measurement(1.0, Unit.Gallon))
+        assertNotEquals(Measurement(1.0, Unit.Gallon), Measurement(2.0, Unit.Gallon))
+
+        assertEquals(Measurement(1.0, Unit.Gallon), Measurement(4.0, Unit.Quart))
+        assertEquals(Measurement(4.0, Unit.Quart), Measurement(1.0, Unit.Gallon))
     }
 
     @Test
-    internal fun gallonsAsQuarts() {
-        assertEquals(Gallon(1), Quart(4))
+    internal fun convertion() {
+        assertEquals(Measurement(2.0, Unit.Gallon), Measurement(32.0, Unit.Cups))
     }
 
     @Test
-    internal fun hashcode() {
-        assertEquals(Gallon(1).hashCode(), Gallon(1).hashCode())
-        assertNotEquals(Gallon(1).hashCode(), Gallon(2).hashCode())
+    internal fun `to string`() {
+        assertEquals("Gallon", Unit.Gallon.toString())
     }
 }
