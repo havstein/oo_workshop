@@ -1,20 +1,27 @@
 package oo_workshop
 
-class Measurement(private val quantity: Double, private val unit: Unit) {
+import kotlin.math.absoluteValue
+
+class Measurement internal constructor(quantity: Number, private val unit: Unit) {
+
+    private val quantity = quantity.toDouble()
+
     operator fun plus(other: Measurement): Measurement {
         return Measurement(
-                quantity = this.convertTo(other.unit) + other.quantity,
+                quantity = this.convertedAmount(other.unit) + other.quantity,
                 unit = unit
         )
     }
 
-    private fun convertTo(other: Unit): Double {
-        return this.unit.ratio(other) * this.quantity
-    }
+    operator fun compareTo(other: Measurement) =
+            this.convertedAmount(other.unit).compareTo(other.quantity)
+
+    private fun convertedAmount(other: Unit) =
+            this.unit.ratio(other) * this.quantity
 
     override fun equals(other: Any?): Boolean {
         if (other !is Measurement) return false
-        return this.convertTo(other.unit) == other.quantity
+        return (this.convertedAmount(other.unit) - other.quantity).absoluteValue < marginOfError
     }
 
     override fun toString(): String {
@@ -26,4 +33,6 @@ class Measurement(private val quantity: Double, private val unit: Unit) {
         result = 31 * result + unit.hashCode()
         return result
     }
+
+    private val marginOfError = 0.000000001
 }

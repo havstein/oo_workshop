@@ -1,23 +1,23 @@
 package oo_workshop
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 internal class MeasurementTest {
 
     @Test
     internal fun equality() {
-        assertEquals(Measurement(1.0, Unit.Gallon), Measurement(1.0, Unit.Gallon))
-        assertNotEquals(Measurement(1.0, Unit.Gallon), Measurement(2.0, Unit.Gallon))
+        assertEquals(1.Gallons, 1.Gallons)
+        assertNotEquals(1.Gallons, 2.Gallons)
 
-        assertEquals(Measurement(1.0, Unit.Gallon), Measurement(4.0, Unit.Quart))
-        assertEquals(Measurement(4.0, Unit.Quart), Measurement(1.0, Unit.Gallon))
-    }
+        assertEquals(1.Gallons, 4.Quarts)
+        assertEquals(4.Quarts, 1.Gallons)
 
-    @Test
-    internal fun convertion() {
-        assertEquals(Measurement(2.0, Unit.Gallon), Measurement(32.0, Unit.Cups))
+        assertTrue(1.Gallons == 16.Cups)
+        assertTrue(1.1.Gallons > 16.Cups)
+        assertFalse(1.0.Gallons > 16.Cups)
+
+        assertEquals((2/3.0).Gallons, (1/3.0).Gallons + (1/3.0).Gallons)
     }
 
     @Test
