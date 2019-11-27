@@ -1,36 +1,28 @@
 package oo_workshop
 
-class Unit {
+internal enum class Unit {
+    Teaspoon,
+    Tablespoon(3, Teaspoon),
+    Ounce(2, Tablespoon),
+    Cups(8, Ounce),
+    Pint(2, Cups),
+    Quart(2, Pint),
+    Gallon(4, Quart),
+    ;
 
-    private val name: String
     private val baseUnitRatio: Double
 
-    private constructor(name: String) {
-        this.name = name
+    constructor() {
         baseUnitRatio = 1.0
     }
 
-    private constructor(name: String, relativeRatio: Number, relativeUnit: Unit) {
-        this.name = name
+    constructor(relativeRatio: Number, relativeUnit: Unit) {
         baseUnitRatio = relativeRatio.toDouble() * relativeUnit.baseUnitRatio
     }
 
-    companion object {
-        internal val Teaspoon = Unit("Teaspoon")
-        internal val Tablespoon = Unit("Tablespoon", 3, Teaspoon)
-        internal val Ounce = Unit("Ounce", 2, Tablespoon)
-        internal val Cups = Unit("Cups", 8, Ounce)
-        internal val Pint = Unit("Pint", 2, Cups)
-        internal val Quart = Unit("Quart", 2, Pint)
-        internal val Gallon = Unit("Gallon", 4, Quart)
-    }
+    override fun toString() = name
 
-    override fun toString(): String {
-        return name
-    }
-
-    internal fun ratio(other: Unit) =
-            this.baseUnitRatio / other.baseUnitRatio
+    internal fun ratio(other: Unit) = this.baseUnitRatio / other.baseUnitRatio
 }
 
 val Number.Teaspoons: Measurement get() = Measurement(this.toDouble(), Unit.Teaspoon)
